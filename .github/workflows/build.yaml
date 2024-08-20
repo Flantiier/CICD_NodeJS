@@ -1,0 +1,19 @@
+name: build
+on: 
+    push:
+        branches: 
+            - main
+            - develop
+    pull_request:
+        branches:
+            - main
+            - develop
+    schedule:
+        - cron: "0 0 * * 1"
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Test
+              run: echo "Ceci est un test"
