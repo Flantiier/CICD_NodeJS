@@ -79,9 +79,6 @@ jobs:
             - os: macos-latest
               node-version: 20
     steps:
-        - name: Check code
-          run: actions/checkout@v4
-        
         # Download artifacts
         - uses: actions/download-artifact@v4
           with:
