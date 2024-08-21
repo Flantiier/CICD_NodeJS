@@ -83,7 +83,7 @@ jobs:
           run: actions/checkout@v4
         
         # Download artifacts
-        - uses: actions/download-artifacts@v4
+        - uses: actions/download-artifact@v4
           with:
             name: build-${{ matrix.os }}-v${{ matrix.node-version }}
         
