@@ -57,3 +57,37 @@ jobs:
         with:
           name: build-${{ matrix.os }}-v${{ matrix.node-version }}
           path: dist/output.txt
+  
+  # Download job
+  download:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    strategy:
+      fail-fast: true
+      max-parallel: 2
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        node-version: [16, 18, 20]
+        include:
+            - os: windows-latest
+              node-version: 22
+        exclude: 
+            - os: ubuntu-latest
+              node-version: 16
+            - os: windows-latest
+              node-version: 18
+            - os: macos-latest
+              node-version: 20
+    steps:
+        - name: Check code
+          run: actions/checkout@v4
+        
+        # Download artifacts
+        - uses: actions/download-artifacts@v4
+          with:
+            name: build-${{ matrix.os }}-v${{ matrix.node-version }}
+        
+        # Read file content
+        - name: Read output
+          run: cat output.txt
+
