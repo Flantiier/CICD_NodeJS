@@ -88,4 +88,8 @@ jobs:
         # Read file content
         - name: Read output
           run: cat output.txt
+        
+        # Deployment!
+        - name: Deployment step
+          run: echo "It is now time to deploy the build!" 
 
