@@ -48,9 +48,12 @@ jobs:
       - name: Build the application
         run: npm run build
       
+      - name: Create folder
+        run: mkdir -p dist
+      
       # Upload artifacts
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: build-${{ matrix.os }}-v${{ matrix.node-version }}
-          path: /dist/build-${{ matrix.os }}-v${{ matrix.node-version }}.txt
+          path: dist/output.txt
