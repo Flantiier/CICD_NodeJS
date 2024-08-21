@@ -33,10 +33,10 @@ jobs:
               node-version: 20
     steps:
       - name: Check code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       - name: Setup node 
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
             node-version: ${{ matrix.node-version }}
       
@@ -53,7 +53,7 @@ jobs:
       
       # Upload artifacts
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-${{ matrix.os }}-v${{ matrix.node-version }}
           path: dist/output.txt
