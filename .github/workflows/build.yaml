@@ -5,6 +5,7 @@ on:
             - main
             - develop
     pull_request:
+        types: closed
         branches:
             - main
             - develop
@@ -12,8 +13,44 @@ on:
         - cron: "0 0 * * 1"
 
 jobs:
-    test:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Test
-              run: echo "Ceci est un test"
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      max-parallel: 2
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        node-version: [16, 18, 20]
+        include:
+            - os: windows-latest
+              version: 22
+        exclude: 
+            - os: ubuntu-latest
+              version: 16
+            - os: windows-latest
+              version: 18
+            - os: macos-latest
+              version: 20
+    steps:
+      - name: Check code
+        uses: actions/checkout@v3
+      
+      - name: Setup node 
+        uses: actions/setup-node@v3
+        with:
+            node-version: ${{ matrix.node-version }}
+      
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+      
+      # Build the application
+      - name: Build the application
+        run: npm run build
+      
+      # Upload artifacts
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-${{ matrix.os }}-v${{ matrix.node-version }}
+          path: /dist/build-${{ matrix.os }}-v${{ matrix.node-version }}.txt
