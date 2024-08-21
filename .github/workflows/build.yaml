@@ -23,14 +23,14 @@ jobs:
         node-version: [16, 18, 20]
         include:
             - os: windows-latest
-              version: 22
+              node-version: 22
         exclude: 
             - os: ubuntu-latest
-              version: 16
+              node-version: 16
             - os: windows-latest
-              version: 18
+              node-version: 18
             - os: macos-latest
-              version: 20
+              node-version: 20
     steps:
       - name: Check code
         uses: actions/checkout@v3
